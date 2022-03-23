@@ -37,7 +37,7 @@ def make_chains(text_string):
     return chains
 
 
-def make_text(chains):
+def make_text(chains, char_limit=None):
     """Take dictionary of Markov chains; return random text."""
 
     keys = list(chains.keys())
@@ -50,10 +50,11 @@ def make_text(chains):
 
         # Note that for long texts (like a full book), this might mean
         # it would run for a very long time.
-
-        word = choice(chains[key])
-        words.append(word)
-        key = (key[1], word)
+        if char_limit and len(' '.join(words)) > char_limit:
+                
+            word = choice(chains[key])
+            words.append(word)
+            key = (key[1], word)
 
     return ' '.join(words)
 
@@ -79,7 +80,6 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # if message.content.startswith(make_text(chains)):
     await message.channel.send(make_chains(text))
 
 client.run(os.environ['DISCORD_TOKEN'])
