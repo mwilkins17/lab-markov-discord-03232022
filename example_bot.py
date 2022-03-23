@@ -1,5 +1,6 @@
 import discord
 import markov
+import os
 
 client = discord.Client()
 
@@ -15,4 +16,4 @@ async def on_message(message):
     if message.content.startswith("markov"):
         await message.channel.send('No.')
 
-client.run('OTU2MjY4NzM0Njk0MTc0NzYw.YjtwqA.Ct_ROk4t3FH_K9fwYCKtp9a3I_g')
+client.run(os.environ['DISCORD_TOKEN'])
